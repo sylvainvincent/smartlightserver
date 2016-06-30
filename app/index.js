@@ -16,7 +16,7 @@ var api = express();
 }());
 
 (function start() {
-	api.listen(api.settings.port, '0.0.0.0');
+	api.listen(process.env.PORT || api.settings.port, '0.0.0.0');
 	console.log('Server is listening to port :port'.replace(':port', api.settings.port));
 	console.log('Server is connecting to :db'.replace(':db', api.settings.db));
 }());
