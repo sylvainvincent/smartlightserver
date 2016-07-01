@@ -4,57 +4,44 @@
 
 module.exports = function(app) {
 	return function(req, res, next) {
-		if(!req.body || (!req.body.firstname && !req.body.lastname && !req.body.email && !req.body.password)){
-      // Erreur 400 (Mauvaise requête)
-      return res.status(400).json({success: false, error: 'Mauvaise requête'});
+		if(!req.body ||
+			!req.body.time ||
+			!req.body.intensity ||
+			!req.body.enabled ||
+			!req.body.date_enabled ||
+			!req.body.date_enabled.monday ||
+			!req.body.date_enabled.tuesday ||
+			!req.body.date_enabled.wednesday ||
+			!req.body.date_enabled.thursday ||
+			!req.body.date_enabled.friday ||
+			!req.body.date_enabled.saturday ||
+			!req.body.date_enabled.sunday){
+      return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
     }
 		var body = req.body;
+		var programmingId = req.params.programming_id;
 
-		var userId = req.params.userid;
-
-		// Does the user exist? Is the user attempting to modify it the account's creator?
-		var User = app.models.User;
-		User.findById({_id: userId}, function(err, user) {
-			if(err)
-				return res.status(500).json({success: false, error: 'Internal server error'}); // 500 Internal Server Error
-			if(!user)
-				return res.status(404).json({success: false, error: 'User was not found'}); // 404 Not Found
-			if(userId != req.user._id) // != is standard inequality (not equal value)
-				return res.status(403).json({success: false, error: 'Not logged in as this user'}); // 403 Forbidden
-
-			var changes = {};
-			if(body.firstname) {
-				user.firstname = body.firstname;
-				changes.firstname = user.firstname;
+		var Programming = app.models.Programming;
+		Programming.findById({_id: programmingId}, function(err, programming) {
+			if(err){
+				return res.status(500).json({success: false, error: 'Erreur interne du serveur'});
 			}
-			if(body.lastname) {
-				user.lastname = body.lastname;
-				changes.lastname = user.lastname;
-			}
-			if(body.email) {
-				user.email = body.email;
-				changes.email = user.email;
-			}
-			if(body.password) {
-				var encPass = User.encryptPassword(body.password);
-				user.password = encPass;
-				changes.password = user.password;
+			if(!programming){
+				return res.status(404).json({success: false, error: 'Programmation non trouvée'});
 			}
 
-			// Is the updated email already belonging to another user?
-			User.findOne({email: user.email}, function(err, found) {
-				if(err)
-					return res.status(500).json({success: false, error: 'Internal server error'});
-				if(found._id != userId)
-					return res.status(403).json({success: false, error: 'Email already in use'});
+			programming.time = body.time;
+			programming.intensity = body.intensity;
+			programming.enabled = body.enabled;
+			programming.dateEnabled = date;
 
-				// Update user
-				user.save(function(err, done) {
-					if(err || !done)
-						return res.status(500).json({success: false, error: 'Internal server error'});
+				// Modification d'une programmation d'éclairage
+				programming.save(function(err, result) {
+					if(err || !result){
+						return res.status(500).json({success: false, error: 'Erreur interne du serveur'});
+					}
 
-					res.status(200).json({success: true, changed: changes}); // 200 OK
-				});
+					res.status(200).json({success: true, changed: result});
 			});
 		});
 	};

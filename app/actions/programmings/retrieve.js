@@ -13,14 +13,14 @@ OK
 module.exports = function(app) {
 	return function(req, res, next) {
 
-		var lightId = req.params.light_id;
+		var programmingId = req.params.programming_id;
 
-		var Light = app.models.Light;
-		Light.findOne({_id: lightId}, function(err, light) {
-			if(err || !light){
+		var Programming = app.models.Programming;
+		Programming.findOne({_id: programmingId}, function(err, programming) {
+			if(err || !programming){
 				return res.status(404).json({success: false, error: 'Cette éclairage n\'a pas été trouvée'});
 			}
-			res.status(200).json({success: true, profile: light});
+			res.status(200).json({success: true, profile: programming});
 		});
 	};
 };

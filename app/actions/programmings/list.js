@@ -12,17 +12,17 @@ OK
 
 module.exports = function(app) {
 	return function(req, res, next) {
-		var Light = app.models.Light;
+		var Programming = app.models.Programming;
 
-		Light.find(function(err, lights) {
+		Programming.find(function(err, programmings) {
 			if(err){
         return res.status(500).json({success: false, error: 'Erreur interne du serveur'});
       }
-			if(!lights){
+			if(!programmings){
 				return res.status(404).json({success: false, error: 'Liste de solutions lumineuses vide'});
 			}
 
-			res.status(200).json({success: true, list: lights});
+			res.status(200).json({success: true, list: programmings});
 		});
 	};
 };

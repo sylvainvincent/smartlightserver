@@ -12,15 +12,17 @@ OK
 
 module.exports = function(app) {
 	return function(req, res, next) {
-		var lightId = req.params.light_id;
+		
+		var programmingId = req.params.programming_id;
 
-		var Light = app.models.Light;
-		Light.findById({_id: lightId}, function(err, light) {
-			if(err || !light){
-				return res.status(404).json({success: false, error: 'Cette éclairage n\'a pas été trouvée'});
+		var Programming = app.models.Programming;
+
+		Programming.findById({_id: programmingId}, function(err, programming) {
+			if(err || !programming){
+				return res.status(404).json({success: false, error: 'Cette programmation n\'a pas été trouvée'});
 			}
 
-			light.remove(function(err, result) {
+			programming.remove(function(err, result) {
 				if(err || !result){
 					return res.status(500).json('Erreur interne du serveur');
 				}
