@@ -18,7 +18,8 @@ module.exports = function(app) {
 			!req.body.switched_on ||
 			!req.body.automatic ||
 			!req.body.photoresistance ||
-			!req.body.intensity){
+			!req.body.intensity ||
+			!req.body.switched_on_date){
 			return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
 		}
 		var body = req.body;

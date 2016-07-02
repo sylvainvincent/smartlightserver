@@ -14,7 +14,7 @@ module.exports = function(app) {
 		automatic: { type: Boolean, required: true },
     photoresistance:{ type: Boolean, required: true },
 		intensity: { type: Number, required: true },
-		startDate:{ type: Date, required:true},
+		switchedOnDate:{ type: Date, required: true},
     text: { type: String, required: false }
 	});
 
