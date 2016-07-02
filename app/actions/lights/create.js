@@ -22,6 +22,10 @@ module.exports = function(app) {
 			!req.body.switched_on_date){
 			return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
 		}
+
+		if(req.body.automatic === true && req.body.switched_on === true){
+			return res.status(400).json({success: false, error: 'Le mode automatique et le mode continue ne doivent pas être activé en même temps'});
+		}
 		var body = req.body;
 
 		var Light = app.models.Light;
@@ -39,13 +43,14 @@ module.exports = function(app) {
 				switchedOn: body.switched_on,
 				automatic: body.automatic,
 				photoresistance: body.photoresistance,
-				intensity: body.intensity
-
+				intensity: body.intensity,
+				switchedOnDate: body.switched_on_date
 			});
 
 				// Sauvegarde dans la base de donnée
 				lightInstance.save(function(err, result) {
 					if(err || !result){
+						throw err;
 						return res.status(500).json({success: false, error: 'Erreur interne du serveur'});
 					}
 
