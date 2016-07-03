@@ -15,11 +15,11 @@ module.exports = function(app) {
 	return function(req, res, next) {
 		if(!req.body ||
 			!req.body.name ||
-			!req.body.switched_on ||
-			!req.body.automatic ||
-			!req.body.photoresistance ||
 			!req.body.intensity ||
-			!req.body.switched_on_date){
+			!req.body.switched_on_date ||
+			typeof req.body.automatic === 'undefined' ||
+			typeof req.body.switched_on === 'undefined' ||
+			typeof req.body.photoresistance === 'undefined'){
 			return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
 		}
 
@@ -40,12 +40,16 @@ module.exports = function(app) {
 			// Création de la solution lumineuse
 			var lightInstance = new Light({
 				name: body.name,
-				switchedOn: body.switched_on,
+				switched_on: body.switched_on,
 				automatic: body.automatic,
 				photoresistance: body.photoresistance,
 				intensity: body.intensity,
-				switchedOnDate: body.switched_on_date
+				switched_on_date: body.switched_on_date
 			});
+
+			if(body.text){
+				lightInstance.text = body.text;
+			}
 
 				// Sauvegarde dans la base de donnée
 				lightInstance.save(function(err, result) {
@@ -54,7 +58,7 @@ module.exports = function(app) {
 						return res.status(500).json({success: false, error: 'Erreur interne du serveur'});
 					}
 
-					res.status(201).json({success: true, id: result._id});
+					res.status(201).json({success: true, _id: result._id});
 				});
 		});
 	};

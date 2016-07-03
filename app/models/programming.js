@@ -10,7 +10,7 @@ module.exports = function(app) {
 		time: { type: String, required: true },
 		intensity: { type: Number, required: true },
 		enabled: { type: Boolean, required: true },
-    dateEnabled: {
+    date_enabled: {
 			monday: {type: Boolean, required: true },
 			tuesday: {type: Boolean, required: true },
 			wednesday: {type: Boolean, required: true },

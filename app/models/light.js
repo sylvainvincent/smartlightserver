@@ -10,11 +10,11 @@ Modèle pour solution lumineuse comment une ampoule
 module.exports = function(app) {
 	var lightSchema = app.mongoose.Schema({
 		name: { type: String, required: true },
-		switchedOn: { type: Boolean, required: true },
 		automatic: { type: Boolean, required: true },
+		switched_on: { type: Boolean, required: true },
     photoresistance:{ type: Boolean, required: true },
 		intensity: { type: Number, required: true },
-		switchedOnDate:{ type: Date, required: true},
+		switched_on_date:{ type: Date, required: true},
     text: { type: String, required: false }
 	});
 

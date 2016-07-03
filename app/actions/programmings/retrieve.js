@@ -20,7 +20,7 @@ module.exports = function(app) {
 			if(err || !programming){
 				return res.status(404).json({success: false, error: 'Cette éclairage n\'a pas été trouvée'});
 			}
-			res.status(200).json({success: true, profile: programming});
+			res.status(200).json({success: true, item: programming});
 		});
 	};
 };

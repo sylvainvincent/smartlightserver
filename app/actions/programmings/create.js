@@ -35,7 +35,7 @@ module.exports = function(app) {
 				time: body.time,
 				intensity: body.intensity,
 				enabled: body.enabled,
-				dateEnabled: date
+				date_enabled: date
 			});
 
 
