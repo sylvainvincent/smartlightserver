@@ -6,19 +6,21 @@ module.exports = function(app) {
 	return function(req, res, next) {
 		if(!req.body ||
 			!req.body.time ||
-			!req.body.intensity ||
-			!req.body.enabled ||
-			!req.body.date_enabled ||
-			!req.body.date_enabled.monday ||
-			!req.body.date_enabled.tuesday ||
-			!req.body.date_enabled.wednesday ||
-			!req.body.date_enabled.thursday ||
-			!req.body.date_enabled.friday ||
-			!req.body.date_enabled.saturday ||
-			!req.body.date_enabled.sunday){
+			typeof req.body.enabled === 'undefined' ||
+			typeof req.body.gradual === 'undefined' ||
+			!req.body.brightness_value ||
+			typeof req.body.days_enabled === 'undefined' ||
+			typeof req.body.days_enabled.monday === 'undefined' ||
+			typeof req.body.days_enabled.tuesday === 'undefined' ||
+			typeof req.body.days_enabled.wednesday === 'undefined' ||
+			typeof req.body.days_enabled.thursday === 'undefined' ||
+			typeof req.body.days_enabled.friday === 'undefined' ||
+			typeof req.body.days_enabled.saturday === 'undefined' ||
+			typeof req.body.days_enabled.sunday === 'undefined'){
       return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
     }
 		var body = req.body;
+		var date = body.days_enabled;
 		var programmingId = req.params.programming_id;
 
 		var Programming = app.models.Programming;
@@ -31,9 +33,10 @@ module.exports = function(app) {
 			}
 
 			programming.time = body.time;
-			programming.intensity = body.intensity;
+			programming.brightness_value = body.brightness_value;
 			programming.enabled = body.enabled;
-			programming.dateEnabled = date;
+			programming.gradual = body.gradual;
+			programming.days_enabled = date;
 
 				// Modification d'une programmation d'éclairage
 				programming.save(function(err, result) {

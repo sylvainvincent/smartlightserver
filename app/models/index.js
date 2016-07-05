@@ -20,6 +20,6 @@ module.exports = function(app) {
 	app.models = {
 		Light : require('./light')(app),
 		Programming : require('./programming')(app),
-		Log: require('./log')(app)
+		Record: require('./record')(app)
 	};
 };

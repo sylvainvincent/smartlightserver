@@ -15,29 +15,54 @@ module.exports = function(app) {
 	return function(req, res, next) {
 		if(!req.body ||
 			!req.body.time ||
-			!req.body.intensity ||
-			!req.body.enabled ||
-			!req.body.date_enabled ||
-			!req.body.date_enabled.monday ||
-			!req.body.date_enabled.tuesday ||
-			!req.body.date_enabled.wednesday ||
-			!req.body.date_enabled.thursday ||
-			!req.body.date_enabled.friday ||
-			!req.body.date_enabled.saturday ||
-			!req.body.date_enabled.sunday){
+			typeof req.body.enabled === 'undefined' ||
+			typeof req.body.gradual === 'undefined' ||
+			!req.body.brightness_value ||
+			typeof req.body.days_enabled === 'undefined' ||
+			typeof req.body.days_enabled.monday === 'undefined' ||
+			typeof req.body.days_enabled.tuesday === 'undefined' ||
+			typeof req.body.days_enabled.wednesday === 'undefined' ||
+			typeof req.body.days_enabled.thursday === 'undefined' ||
+			typeof req.body.days_enabled.friday === 'undefined' ||
+			typeof req.body.days_enabled.saturday === 'undefined' ||
+			typeof req.body.days_enabled.sunday === 'undefined'){
+				var body = req.body;
+				console.log(body.time);
+				console.log(body.enabled);
+				console.log(body.gradual);
+				console.log(body.brightness_value);
+				console.log(body.days_enabled);
+				console.log(body.days_enabled.monday);
+				console.log(body.days_enabled.tuesday);
+				console.log(body.days_enabled.wednesday);
+				console.log(body.days_enabled.thursday);
+				console.log(body.days_enabled.friday);
+				console.log(body.days_enabled.saturday);
+				console.log(body.days_enabled.sunday);
+
 			return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
 		}
 		var body = req.body;
-		var date = body.date_enabled;
+		var date = body.days_enabled;
+
+		var Programming = app.models.Programming;
 
 			// Création d'un programme d'éclairage
 			var programming = new Programming({
 				time: body.time,
-				intensity: body.intensity,
+				brightness_value: body.brightness_value,
 				enabled: body.enabled,
-				date_enabled: date
+				gradual: body.gradual,
+				days_enabled:{
+					monday:date.monday,
+					tuesday:date.tuesday,
+					wednesday:date.wednesday,
+					thursday:date.thursday,
+					friday:date.friday,
+					saturday:date.saturday,
+					sunday:date.sunday
+				}
 			});
-
 
 				// Sauvegarde dans la base de donnée
 				programming.save(function(err, result) {

@@ -7,10 +7,11 @@ Modèle pour programmation de l'éclairage
 */
 module.exports = function(app) {
 	var programmingSchema = app.mongoose.Schema({
-		time: { type: String, required: true },
-		intensity: { type: Number, required: true },
+		time: { type: Date, required: true },
 		enabled: { type: Boolean, required: true },
-    date_enabled: {
+		gradual: { type: Boolean, required: true },
+		brightness_value: { type: Number, required: true },
+    days_enabled: {
 			monday: {type: Boolean, required: true },
 			tuesday: {type: Boolean, required: true },
 			wednesday: {type: Boolean, required: true },

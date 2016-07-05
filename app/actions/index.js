@@ -3,6 +3,8 @@
 module.exports = function(app) {
 	app.actions = {
 		lights : require('./lights')(app),
-		programmings : require('./programmings')(app)
+		programmings : require('./programmings')(app),
+		records : require('./records')(app)
+
 	};
 };

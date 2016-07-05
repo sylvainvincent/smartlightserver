@@ -2,4 +2,6 @@
 module.exports = function(app) {
 	app.use('/lights', require('./lights')(app));
 	app.use('/programmings', require('./programmings')(app));
+	app.use('/records', require('./records')(app));
+
 };

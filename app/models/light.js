@@ -12,10 +12,11 @@ module.exports = function(app) {
 		name: { type: String, required: true },
 		automatic: { type: Boolean, required: true },
 		switched_on: { type: Boolean, required: true },
-    photoresistance:{ type: Boolean, required: true },
-		intensity: { type: Number, required: true },
-		switched_on_date:{ type: Date, required: true},
-    text: { type: String, required: false }
+    brightness_auto:{ type: Boolean, required: true },
+		brightness_value: { type: Number, required: true },
+		switched_off_auto_value: { type: Number, required: false },
+		switched_on_date:{ type: Date, required: false},
+    message: { type: String, required: false }
 	});
 
 	var Light = app.mongoose.model('Light', lightSchema);
