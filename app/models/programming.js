@@ -9,6 +9,7 @@ module.exports = function(app) {
 	var programmingSchema = app.mongoose.Schema({
 		time: { type: Date, required: true },
 		enabled: { type: Boolean, required: true },
+		trigger: { type: Boolean, required: true },
 		gradual: { type: Boolean, required: true },
 		brightness_value: { type: Number, required: true },
     days_enabled: {

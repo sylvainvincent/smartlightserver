@@ -15,18 +15,21 @@
 
 module.exports = function(app) {
 	return function(req, res, next) {
-		if(!req.body ||
-			typeof req.body.automatic === 'undefined' ||
-			typeof req.body.switched_on === 'undefined' ||
-			typeof req.body.brightness_auto === 'undefined'){
+		if(!req.body){
       return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
     }
 
 		var body = req.body;
 
 		if(body.switched_off_auto_value){
-			if(body.switched_off_auto_value < 0 || body.switched_off_auto_value > 10 ){
+			if(body.switched_off_auto_value < 0 || body.switched_off_auto_value > 9 ){
 				return res.status(400).json({success: false, error: 'switched_off_auto_value doit être entre 0 et 10'});
+			}
+		}
+
+		if(typeof req.body.automatic !== 'undefined' && typeof req.body.switched_on !== 'undefined'){
+			if(body.automatic === true && body.switched_on === true){
+				return res.status(400).json({success: false, error: 'Le mode automatique et le mode continue ne doivent pas être activé en même temps'});
 			}
 		}
 
@@ -58,9 +61,23 @@ module.exports = function(app) {
 				light.switched_off_auto_value = body.switched_off_auto_value;
 			}
 
-			light.switched_on = body.switched_on;
-			light.automatic = body.automatic;
-			light.brightness_auto = body.brightness_auto;
+			if (body.switched_on) {
+				light.switched_on = body.switched_on;
+			}
+
+			if (body.automatic) {
+				light.automatic = body.automatic;
+			}
+
+			// Si switched_on et automatic sont tous les deux vrai alors switched_on passe à false
+			if (light.switched_on && light.automatic){
+				light.switched_on = false;
+			}
+
+			if (body.brightness_auto) {
+				light.brightness_auto = body.brightness_auto;
+			}
+
 
 			// Enregistre les nouvelles modifications dans la base de données
 			light.save(function(err, result) {

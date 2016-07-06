@@ -17,6 +17,7 @@ module.exports = function(app) {
 			!req.body.time ||
 			typeof req.body.enabled === 'undefined' ||
 			typeof req.body.gradual === 'undefined' ||
+			typeof req.body.trigger === 'undefined' ||
 			!req.body.brightness_value ||
 			typeof req.body.days_enabled === 'undefined' ||
 			typeof req.body.days_enabled.monday === 'undefined' ||
@@ -52,6 +53,7 @@ module.exports = function(app) {
 				time: body.time,
 				brightness_value: body.brightness_value,
 				enabled: body.enabled,
+				trigger: body.trigger,
 				gradual: body.gradual,
 				days_enabled:{
 					monday:date.monday,

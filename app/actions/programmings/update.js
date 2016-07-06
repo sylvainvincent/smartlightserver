@@ -8,6 +8,7 @@ module.exports = function(app) {
 			!req.body.time ||
 			typeof req.body.enabled === 'undefined' ||
 			typeof req.body.gradual === 'undefined' ||
+			typeof req.body.trigger === 'undefined' ||
 			!req.body.brightness_value ||
 			typeof req.body.days_enabled === 'undefined' ||
 			typeof req.body.days_enabled.monday === 'undefined' ||
@@ -35,6 +36,7 @@ module.exports = function(app) {
 			programming.time = body.time;
 			programming.brightness_value = body.brightness_value;
 			programming.enabled = body.enabled;
+			programming.trigger = body.trigger;
 			programming.gradual = body.gradual;
 			programming.days_enabled = date;
 
