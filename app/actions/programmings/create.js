@@ -18,7 +18,7 @@ module.exports = function(app) {
 			typeof req.body.enabled === 'undefined' ||
 			typeof req.body.gradual === 'undefined' ||
 			typeof req.body.trigger === 'undefined' ||
-			!req.body.brightness_value ||
+			req.body.brightness_value !== 0 ||
 			typeof req.body.days_enabled === 'undefined' ||
 			typeof req.body.days_enabled.monday === 'undefined' ||
 			typeof req.body.days_enabled.tuesday === 'undefined' ||
@@ -27,22 +27,13 @@ module.exports = function(app) {
 			typeof req.body.days_enabled.friday === 'undefined' ||
 			typeof req.body.days_enabled.saturday === 'undefined' ||
 			typeof req.body.days_enabled.sunday === 'undefined'){
-				var body = req.body;
-				console.log(body.time);
-				console.log(body.enabled);
-				console.log(body.gradual);
-				console.log(body.brightness_value);
-				console.log(body.days_enabled);
-				console.log(body.days_enabled.monday);
-				console.log(body.days_enabled.tuesday);
-				console.log(body.days_enabled.wednesday);
-				console.log(body.days_enabled.thursday);
-				console.log(body.days_enabled.friday);
-				console.log(body.days_enabled.saturday);
-				console.log(body.days_enabled.sunday);
-
 			return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
 		}
+
+		if(req.body.brightness_value < 0 || req.body.brightness_value > 15){
+			return res.status(400).json({success: false, error: 'La luminosité doit être entre 0 et 15'});
+		}
+
 		var body = req.body;
 		var date = body.days_enabled;
 

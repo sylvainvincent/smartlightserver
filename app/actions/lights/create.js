@@ -32,6 +32,12 @@ module.exports = function(app) {
 			}
 		}
 
+		if(req.body.brightness_value){
+			if(req.body.brightness_value < 0 || req.body.brightness_value > 15 ){
+				return res.status(400).json({success: false, error: 'la luminosité doit être entre 0 et 15'});
+			}
+		}
+
 		var body = req.body;
 
 		var Light = app.models.Light;

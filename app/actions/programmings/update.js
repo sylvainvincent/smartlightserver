@@ -9,7 +9,6 @@ module.exports = function(app) {
 			typeof req.body.enabled === 'undefined' ||
 			typeof req.body.gradual === 'undefined' ||
 			typeof req.body.trigger === 'undefined' ||
-			!req.body.brightness_value ||
 			typeof req.body.days_enabled === 'undefined' ||
 			typeof req.body.days_enabled.monday === 'undefined' ||
 			typeof req.body.days_enabled.tuesday === 'undefined' ||
@@ -18,9 +17,22 @@ module.exports = function(app) {
 			typeof req.body.days_enabled.friday === 'undefined' ||
 			typeof req.body.days_enabled.saturday === 'undefined' ||
 			typeof req.body.days_enabled.sunday === 'undefined'){
+			console.log(req.body.time);
+			console.log(req.body.days_enabled);
+			console.log(req.body.enabled);
+			console.log(req.body.trigger);
+			console.log(req.body.gradual);
+			console.log(req.body.brightness_value);
       return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
     }
+
+		if(req.body.brightness_value < 0 || req.body.brightness_value > 15){
+			return res.status(400).json({success: false, error: 'La luminosité doit être entre 0 et 15'});
+		}
+
 		var body = req.body;
+
+
 		var date = body.days_enabled;
 		var programmingId = req.params.programming_id;
 
@@ -34,7 +46,9 @@ module.exports = function(app) {
 			}
 
 			programming.time = body.time;
-			programming.brightness_value = body.brightness_value;
+			if(body.brightness_value){
+				programming.brightness_value = body.brightness_value;
+			}
 			programming.enabled = body.enabled;
 			programming.trigger = body.trigger;
 			programming.gradual = body.gradual;
