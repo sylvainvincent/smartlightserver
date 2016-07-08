@@ -18,7 +18,7 @@ module.exports = function(app) {
 			typeof req.body.enabled === 'undefined' ||
 			typeof req.body.gradual === 'undefined' ||
 			typeof req.body.trigger === 'undefined' ||
-			req.body.brightness_value !== 0 ||
+			req.body.brightness_value === 0 ||
 			typeof req.body.days_enabled === 'undefined' ||
 			typeof req.body.days_enabled.monday === 'undefined' ||
 			typeof req.body.days_enabled.tuesday === 'undefined' ||
