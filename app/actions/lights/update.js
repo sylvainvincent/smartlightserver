@@ -22,8 +22,8 @@ module.exports = function(app) {
 		var body = req.body;
 
 		if(body.switched_off_auto_value){
-			if(body.switched_off_auto_value < 0 || body.switched_off_auto_value > 15 ){
-				return res.status(400).json({success: false, error: 'switched_off_auto_value doit être entre 0 et 15'});
+			if(body.switched_off_auto_value < 0 || body.switched_off_auto_value > 9 ){
+				return res.status(400).json({success: false, error: 'switched_off_auto_value doit être entre 0 et 9'});
 			}
 		}
 
@@ -55,7 +55,7 @@ module.exports = function(app) {
 				light.message = body.message;
 			}
 
-			if(body.brightness_value){
+			if(typeof body.brightness_value !== 'undefined'){
 				light.brightness_value = body.brightness_value;
 			}
 
@@ -63,15 +63,15 @@ module.exports = function(app) {
 				light.switched_on_date = body.switched_on_date;
 			}
 
-			if(body.switched_off_auto_value){
+			if(typeof body.switched_off_auto_value !== 'undefined'){
 				light.switched_off_auto_value = body.switched_off_auto_value;
 			}
 
-			if (body.switched_on !== 'undefined') {
+			if (typeof body.switched_on !== 'undefined') {
 				light.switched_on = body.switched_on;
 			}
 
-			if (body.automatic !== 'undefined') {
+			if (typeof body.automatic !== 'undefined') {
 				light.automatic = body.automatic;
 			}
 
@@ -80,7 +80,7 @@ module.exports = function(app) {
 				light.switched_on = false;
 			}
 
-			if (body.brightness_auto !== 'undefined') {
+			if (typeof body.brightness_auto !== 'undefined') {
 				light.brightness_auto = body.brightness_auto;
 			}
 
