@@ -22,12 +22,12 @@ module.exports = function(app) {
 		var body = req.body;
 
 		if(body.switched_off_auto_value){
-			if(body.switched_off_auto_value < 0 || body.switched_off_auto_value > 9 ){
-				return res.status(400).json({success: false, error: 'switched_off_auto_value doit être entre 0 et 10'});
+			if(body.switched_off_auto_value < 0 || body.switched_off_auto_value > 15 ){
+				return res.status(400).json({success: false, error: 'switched_off_auto_value doit être entre 0 et 15'});
 			}
 		}
 
-		if(typeof req.body.automatic !== 'undefined' && typeof req.body.switched_on !== 'undefined'){
+		if(req.body.automatic && req.body.switched_on){
 			if(body.automatic === true && body.switched_on === true){
 				return res.status(400).json({success: false, error: 'Le mode automatique et le mode continue ne doivent pas être activé en même temps'});
 			}
@@ -67,11 +67,11 @@ module.exports = function(app) {
 				light.switched_off_auto_value = body.switched_off_auto_value;
 			}
 
-			if (body.switched_on) {
+			if (body.switched_on !== 'undefined') {
 				light.switched_on = body.switched_on;
 			}
 
-			if (body.automatic) {
+			if (body.automatic !== 'undefined') {
 				light.automatic = body.automatic;
 			}
 
@@ -80,7 +80,7 @@ module.exports = function(app) {
 				light.switched_on = false;
 			}
 
-			if (body.brightness_auto) {
+			if (body.brightness_auto !== 'undefined') {
 				light.brightness_auto = body.brightness_auto;
 			}
 

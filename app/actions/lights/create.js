@@ -22,7 +22,7 @@ module.exports = function(app) {
 			return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
 		}
 
-		if(req.body.automatic === true && req.body.switched_on === true){
+		if(req.body.automatic && req.body.switched_on){
 			return res.status(400).json({success: false, error: 'Le mode automatique et le mode continue ne doivent pas être activé en même temps'});
 		}
 
