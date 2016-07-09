@@ -63,7 +63,7 @@ module.exports = function(app) {
 						return res.status(500).json({success: false, error: 'Erreur interne du serveur'});
 					}
 
-					res.status(201).json({success: true, id: result._id});
+					res.status(201).json({success: true, _id: result._id});
 				});
 			};
 };

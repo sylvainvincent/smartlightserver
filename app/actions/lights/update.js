@@ -27,11 +27,9 @@ module.exports = function(app) {
 			}
 		}
 
-		if(req.body.automatic && req.body.switched_on){
-			if(body.automatic === true && body.switched_on === true){
+			if(body.automatic === 'true' && body.switched_on === 'true'){
 				return res.status(400).json({success: false, error: 'Le mode automatique et le mode continue ne doivent pas être activé en même temps'});
 			}
-		}
 
 		if(req.body.brightness_value){
 			if(req.body.brightness_value < 0 || req.body.brightness_value > 15 ){
