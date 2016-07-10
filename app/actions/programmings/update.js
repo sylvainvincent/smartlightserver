@@ -6,7 +6,9 @@ module.exports = function(app) {
 	return function(req, res, next) {
 		if(!req.body){
       return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
-    }
+    }else{
+			console.log(req.body);
+		}
 
 		if(req.body.brightness_value){
 			if(req.body.brightness_value < 0 || req.body.brightness_value > 15){
