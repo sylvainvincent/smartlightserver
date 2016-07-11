@@ -27,8 +27,8 @@ module.exports = function(app) {
 		}
 
 		if(req.body.switched_off_auto_value){
-			if(req.body.switched_off_auto_value < 0 || req.body.switched_off_auto_value > 10 ){
-				return res.status(400).json({success: false, error: 'switched_off_auto_value doit être entre 0 et 10'});
+			if(req.body.switched_off_auto_value < 0 || req.body.switched_off_auto_value > 999 ){
+				return res.status(400).json({success: false, error: 'switched_off_auto_value doit être entre 0 et 1000'});
 			}
 		}
 
