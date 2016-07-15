@@ -58,7 +58,7 @@ module.exports = function(app) {
 				brightness_value: body.brightness_value
 			});
 
-			if(body.text){
+			if(body.message){
 				lightInstance.message = body.message;
 			}
 
