@@ -15,7 +15,7 @@ module.exports = function(app) {
 	return function(req, res, next) {
 		if(!req.body ||
 			!req.body.presence_trigger_date ||
-			!req.body.brightness_value){
+			typeof req.body.brightness_value === 'undefined'){
 			return res.status(400).json({success: false, error: 'Paramètres manquants ou inconnus'});
 		}
 
